@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {graph,closure,isFort,enumerate,count} from './math.js';
+test('発表の強制例と停止集合',()=>{const g=graph('six');assert.equal(closure(g,3),63);assert.equal(closure(g,5),5);assert(isFort(g,63^5));assert(!isFort(g,63^3));assert.equal(enumerate(g).z,2);});
+test('既知の風車の全個数・根あり/なし',()=>{for(let t=1;t<=4;t++){const d=enumerate(graph('wind',t));assert.equal(d.minimal.length,3**t+3*t);assert.equal(d.minimal.filter(m=>m&1).length,3**t);}});
+test('H35 の総数56・strong35',()=>{const g=graph('h35'),d=enumerate(g);assert.equal(d.minimal.length,56);assert.equal(d.minimal.filter(m=>m&(1<<8)).length,35);});
+test('全Fort交差とforcing成功が同値・極小性を全真部分集合で独立照合',()=>{for(const kind of ['six','path','cycle','star','h35']){const g=graph(kind),d=enumerate(g);for(let m=0;m<(1<<g.n);m++){assert.equal(closure(g,m)===(1<<g.n)-1,d.minimal.every(f=>(m&f)!==0));if(isFort(g,m)){let minimal=true;for(let s=(m-1)&m;s;s=(s-1)&m)if(isFort(g,s)){minimal=false;break;}assert.equal(d.minimal.includes(m),minimal);}}}});
