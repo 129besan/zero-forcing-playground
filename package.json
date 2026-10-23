@@ -1,1 +1,11 @@
-{"name":"zero-forcing-playground","private":true,"type":"module","scripts":{"test":"node --test test.mjs"}}
+{
+  "name": "zero-forcing-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test.mjs dom.test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}
